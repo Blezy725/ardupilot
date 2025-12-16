@@ -37,7 +37,10 @@ Mode *Copter::mode_from_mode_num(const Mode::Number mode)
         case Mode::Number::ACRO:
             return &mode_acro;
 #endif
-
+#if MODE_MYFIRST_ENABLED
+        case Mode::Number::MYFIRST:
+            return &mode_myfirst;
+#endif
         case Mode::Number::STABILIZE:
             return &mode_stabilize;
 
@@ -186,6 +189,7 @@ bool Copter::gcs_mode_enabled(const Mode::Number mode_num)
     // List of modes that can be blocked, index is bit number in parameter bitmask
     static const uint8_t mode_list [] {
         (uint8_t)Mode::Number::STABILIZE,
+        (uint8_t)Mode::Number::MYFIRST,
         (uint8_t)Mode::Number::ACRO,
         (uint8_t)Mode::Number::ALT_HOLD,
         (uint8_t)Mode::Number::AUTO,
@@ -241,6 +245,9 @@ bool Copter::set_mode(Mode::Number mode, ModeReason reason)
         control_mode_reason = reason;
         // set yaw rate time constant during autopilot startup
         if (reason == ModeReason::INITIALISED && mode == Mode::Number::STABILIZE) {
+            attitude_control->set_yaw_rate_tc(g2.command_model_pilot_y.get_rate_tc());
+        }
+        if (reason == ModeReason::INITIALISED && mode == Mode::Number::MYFIRST) {
             attitude_control->set_yaw_rate_tc(g2.command_model_pilot_y.get_rate_tc());
         }
         // make happy noise

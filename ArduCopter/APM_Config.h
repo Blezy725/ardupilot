@@ -23,7 +23,7 @@
 //#define MODE_THROW_ENABLED    0            // disable throw mode support
 //#define MODE_ZIGZAG_ENABLED   0            // disable zigzag mode support
 //#define OSD_ENABLED           0            // disable on-screen-display support
-
+#define MODE_MYFIRST_ENABLED  1
 // features below are disabled by default on all boards
 //#define CAL_ALWAYS_REBOOT                         // flight controller will reboot after compass or accelerometer calibration completes
 //#define DISALLOW_GCS_MODE_CHANGE_DURING_RC_FAILSAFE   // disable mode changes from GCS during Radio failsafes.  Avoids a race condition for vehicle like Solo in which the RC and telemetry travel along the same link
